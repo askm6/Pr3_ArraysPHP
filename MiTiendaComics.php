@@ -47,19 +47,26 @@ function mostrarComicsEnTabla()
 
 function mostrarValorAlmacen()
 {
-    // pending
+    global $inventario;
+    $valorAlmacenTotal = 0;
+    foreach ($inventario as $categoria => $comics) {
+        foreach ($comics as $comic) {
+            $valorAlmacenTotal += $comic['precio'] * $comic['stock'];
+        }
+    }
+    echo "Total valor almacen: " . $valorAlmacenTotal . '<br>';
 }
 
 function aplicarDescuentoManga()
 {
     global $inventario;
 
-    foreach ($inventario['accion'] as &$comic) {
-        if ($comic['idioma'] == 'Japonés') {
-            $comic['precio'] = $comic['precio'] * 0.7; // Aplicar descuento del 30%
+    foreach ($inventario as $categoria => &$comics) {
+        foreach ($comics as &$comic) {
+            if ($comic['idioma'] == 'Japonés') {
+                $comic['precio'] *= 0.7; // Aplicar descuento del 30%
+            }
         }
     }
 }
 ?>
-
-
